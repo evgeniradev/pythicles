@@ -1,0 +1,15 @@
+version: '3'
+services:
+  pythicles_postgres:
+    image: postgres:11.3
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+  pythicles_app:
+    build: .
+    command: /bin/sh -c "python ./bin/connection_loader.py && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - '80:8000'
+    depends_on:
+      - pythicles_postgres

@@ -1,0 +1,33 @@
+<div class='col-sm-4 menu'>
+  <div class='menu-section'>
+    {% include 'partials/_search.html' %}
+  </div>
+  <div class='menu-section'>
+    <h5>Home</h4>
+    <ol class='list-unstyled'>
+      <li>
+        <a href="{% url 'index' %}"
+          {% if not request.GET.author and not request.GET.keywords and request.path_info == '/' %}
+            class='active'
+          {% endif %}
+          >All Articles</a>
+      </li>
+    </ol>
+  </div>
+  {% if authors %}
+    <div class='menu-section'>
+      <h5>By Author</h4>
+      <ol class='list-unstyled'>
+        {% for author in authors %}
+          <li>
+            <a href="{% url 'index' %}?author={{author.slug}}"
+              {% if request.GET.author == author.slug %}
+                class='active'
+              {% endif %}
+            >{{ author }}</a>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endif %}
+</div>

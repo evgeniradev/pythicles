@@ -1,0 +1,43 @@
+{% load mathfilters %}
+
+{% if articles.has_other_pages %}
+  <ul class='pagination'>
+    {% if articles.has_previous %}
+      <li class='page-item'>
+        <a href='?page={{ articles.previous_page_number }}{{ additional_params }}' class='page-link'>&laquo;</a>
+      </li>
+    {% else %}
+      <li class='page-item disabled'>
+        <a class='page-link'>&laquo;</a>
+      </li>
+    {% endif %}
+    {% for i in articles.paginator.page_range %}
+      {% if i > articles.number|sub:displayed_pages_margin and i < articles.number|add:displayed_pages_margin or i == 1 or i == articles.paginator.count %}
+        {% if articles.number == i %}
+          <li class='page-item active'>
+            <a class='page-link'>{{ i }}</a>
+          </li>
+        {% else %}
+          <li class='page-item'>
+            <a href='?page={{ i }}{{ additional_params }}' class='page-link'>{{ i }}</a>
+          </li>
+        {% endif %}
+      {% else %}
+        {% if i == articles.number|sub:displayed_pages_margin or i == articles.number|add:displayed_pages_margin %}
+          <li class='page-item disabled'>
+            <a class='page-link'>&hellip;</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if articles.has_next %}
+      <li class='page-item'>
+        <a href='?page={{ articles.next_page_number }}{{ additional_params }}' class='page-link'>&raquo;</a>
+      </li>
+    {% else %}
+      <li class='page-item disabled'>
+        <a class='page-link'>&raquo;</a>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+
+  <div class='article'>
+    <h3 class='article-title mb-0'>{{ article.title }}</h3>
+    <p class='article-info small text-muted mb-0'>{{ article.created_at|naturalday|title }} by <a href="{% url 'index' %}?author={{article.author.slug}}">{{ article.author }}</a></p>
+    <div class='article-photo mt-2 mb-2' style="background-image: url('{{ article.image.url }}')"></div>
+    <div class='article-content'>
+      {{ article.content|safe }}
+    </div>
+  </div>
+
+{% endblock %}
